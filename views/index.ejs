@@ -5,25 +5,26 @@
 		<script type="text/javascript" src='/js/audioRecorder.js'></script>
 	</head>
 	<body>
-		<section class="first-state">
-		<form action="/" method="post">
-				<input type="hidden" name="type" value="user">
-				<input type="text" name="name">
-				<input type="number" name="age">
-				<input type="radio" name="gender" value="male" id="male"><label for="male">Male</label>
-				<input type="radio" name="gender" value="male" id="female"><label for="female">Female</label>
-				<input type="radio" name="gender" value="male" id="unknown"><label for="unknown">Unknown</label>
-				<input type="submit">
-			</form>
-		</section>
-		<section class="second-state">
-		<% for(let i = 0; i < data.length; i++){ %>
-			<article>
-			<%= data[i].question %>
-			<button class="next">Next question</button>
-			</article>
-		<% } %>
-		</section>
-    	<script type="text/javascript" src='/js/app.js'></script>
+		<script type="text/javascript" src='/js/audioRecorder.js'></script>
+    <section class="first-state">
+      <form action="/" method="post">
+  			<input type="hidden" name="type" value="user">
+  			<input type="text" name="name">
+  			<input type="number" name="age">
+  			<input type="radio" name="gender" value="male" id="male"><label for="male">Male</label>
+  			<input type="radio" name="gender" value="female" id="female"><label for="female">Female</label>
+  			<input type="radio" name="gender" checked value="unknown" id="unknown"><label for="unknown">Unknown</label>
+  			<input type="submit">
+  		</form>
+    </section>
+    <section class="second-state">
+      <% for(let i = 0; i < data.length; i++){ %>
+        <article>
+          <%= data[i].question %>
+          <button class="next">Next question</button>
+        </article>
+      <% } %>
+    </section>
+    <script type="text/javascript" src='/js/app.js'></script>
 	</body>
 </html>
