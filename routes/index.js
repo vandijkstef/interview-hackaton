@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const UserStore = require('../scripts/UserStore.js');
 const AudioStore = require('../scripts/AudioStore.js');
+var questions = require('./questions.js');
 
 router.get('/', function(req, res, next) {
-	res.render('index', { title: 'Express' });
+	res.render('index', {data: questions});
 });
 
 router.post('/', function(req, res) {
