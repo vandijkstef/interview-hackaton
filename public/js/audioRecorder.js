@@ -23,6 +23,7 @@ class AUAudioRecorder {
 	*************************/
 
 	/* Asks the user for their permission to access the computer's microphone. */
+
 	requestPermission() {
 		if(navigator.getUserMedia) {
 			// Definitions
@@ -49,6 +50,7 @@ class AUAudioRecorder {
 
 					instance.audio = new Audio(audioURL);
 					instance.theblob = blob;
+          instance.sendAudio();
 				} // End of ondataavailable action.
 
 			} // End of onSuccess
@@ -61,8 +63,23 @@ class AUAudioRecorder {
 			navigator.getUserMedia(constraints, onSuccess, onError);
 		} // End of if-supported-statement.
 	};
+  sendAudio(){
+    //create fetsch with localhost
+    let data = this;
+    (async () => {
+      const rawResponse = await fetch('/', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data);
+      });
+  const content = await rawResponse.json();
 
-
+  console.log(content);
+})();
+  };
 	/* Starts recording. */
 	startRecording(callback) {
 		if(this.mediaRecorder !== null) {
@@ -126,7 +143,6 @@ class AUAudioRecorder {
 		if(this.audio !== null) {
 			this.audio.pause();
 			this.playing = false;
-
 		// Otherwise go to the callback.
 		} else {
 			if(callback) {
@@ -142,7 +158,6 @@ class AUAudioRecorder {
 			this.audio.pause();
 			this.audio.currentTime = 0;
 			this.playing = false;
-
 		// Otherwise go to the callback.
 		} else {
 			if(callback) {
@@ -239,7 +254,6 @@ class AUAudioRecorder {
 
 	/* Returns the audio object that contains the final recording. */
 	getRecording() {
-    console.log(this);
 		if(this.audio !== null) {
 			return this.audio;
 		}
