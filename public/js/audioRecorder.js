@@ -9,6 +9,7 @@ class AUAudioRecorder {
 		this.mediaStream = null;
 		this.shouldLoop = false;
 		this.playing = false;
+    this.type = 'audio';
 
 		navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
 	}
