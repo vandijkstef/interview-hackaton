@@ -51,7 +51,7 @@ class AUAudioRecorder {
 
 					instance.audio = new Audio(audioURL);
 					instance.theblob = blob;
-          instance.sendAudio();
+          console.log(instance.audio);
 				} // End of ondataavailable action.
 
 			} // End of onSuccess
@@ -64,23 +64,6 @@ class AUAudioRecorder {
 			navigator.getUserMedia(constraints, onSuccess, onError);
 		} // End of if-supported-statement.
 	};
-  sendAudio(){
-    //create fetsch with localhost
-    let data = this;
-    console.log(data);
-    (async () => {
-      const rawResponse = await fetch('/', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
-  const content = await rawResponse.json();
-  console.log(content);
-})();
-  };
 	/* Starts recording. */
 	startRecording(callback) {
 		if(this.mediaRecorder !== null) {

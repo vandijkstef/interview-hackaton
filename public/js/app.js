@@ -68,8 +68,27 @@ const interview = {
     button.addEventListener('click', function(e){
       e.preventDefault();
       audioRec.stopRecording( (err) => { console.log(err); } );
+      setTimeout(function(){
+        let data = audioRec.getRecordingFile();
+        interview.sendData(data);
+      }, 500);
+      interview.startInterview();
     })
     this.questionNr++;
 
+  },
+  sendData: function(data){
+    (async () => {
+      const rawResponse = await fetch('/', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+      const content = await rawResponse.json();
+      console.log(content);
+    })();
   }
 }
