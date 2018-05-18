@@ -78,6 +78,9 @@ const interview = {
 
   },
   sendData: function(data){
+    const fd = new FormData();
+        fd.append('fname', 'test.txt');
+        fd.append('data', data);
     (async () => {
       const rawResponse = await fetch('/', {
         method: 'POST',
@@ -85,7 +88,7 @@ const interview = {
           'Accept': 'application/json',
           'Content-Type': false
         },
-        body: JSON.stringify(data)
+        body: fd
       });
       const content = await rawResponse.json();
       console.log(content);
