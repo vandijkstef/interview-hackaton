@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+    <link rel="stylesheet" href="/stylesheets/style.css">
 		<title>Interview Hackaton</title>
 	</head>
 	<body>
@@ -8,11 +9,27 @@
     <section class="first-state">
       <form action="/" method="post">
   			<input type="hidden" name="type" value="user">
-  			<input type="text" name="name">
-  			<input type="number" name="age">
-  			<input type="radio" name="gender" value="male" id="male"><label for="male">Male</label>
-  			<input type="radio" name="gender" value="female" id="female"><label for="female">Female</label>
-  			<input type="radio" name="gender" checked value="unknown" id="unknown"><label for="unknown">Unknown</label>
+        <fieldset>
+          <label>
+            <p>
+              Enter your name
+            </p>
+    			  <input type="text" name="name">
+          </label>
+        </fieldset>
+        <fieldset>
+          <label>
+            <p>
+              Enter your age
+            </p>
+            <input type="number" name="age">
+          </label>
+        </fieldset>
+        <fieldset>
+    			<input type="radio" name="gender" value="male" id="male"><label for="male">Male</label>
+    			<input type="radio" name="gender" value="female" id="female"><label for="female">Female</label>
+    			<input type="radio" name="gender" checked value="unknown" id="unknown"><label for="unknown">Unknown</label>
+        </fieldset>
   			<input type="submit">
   		</form>
     </section>
