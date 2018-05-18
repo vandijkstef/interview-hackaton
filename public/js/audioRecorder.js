@@ -67,6 +67,7 @@ class AUAudioRecorder {
   sendAudio(){
     //create fetsch with localhost
     let data = this;
+    console.log(data);
     (async () => {
       const rawResponse = await fetch('/', {
         method: 'POST',
@@ -77,6 +78,7 @@ class AUAudioRecorder {
         body: JSON.stringify(data)
       });
   const content = await rawResponse.json();
+  console.log(content);
 })();
   };
 	/* Starts recording. */
@@ -102,6 +104,7 @@ class AUAudioRecorder {
 
 	/* Stops the recording. */
 	stopRecording(callback) {
+    console.log('stopped');
 		if(this.mediaRecorder !== null) {
 			// Only stop recording if the state is recording.
 			if(this.mediaRecorder.state === 'recording') {

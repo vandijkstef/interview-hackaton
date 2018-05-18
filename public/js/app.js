@@ -1,3 +1,4 @@
+let userData = {};
 const userForm = {
   init: function(){
     let form = document.querySelector('form');
@@ -26,8 +27,49 @@ const userForm = {
         body: JSON.stringify(data)
       });
       const content = await rawResponse.json();
+      userForm.succes(content)
     })();
-  }
+  },
+  succes: function(data){
+    if(data){
+      if(data._id){
+        userData = '';
+        userData = data;
+        let firstState = document.querySelector('.first-state');
+        let secondState = document.querySelector('.second-state');
+        firstState.classList.add('inactive');
+        secondState.classList.add('active');
+        interview.init();
+      }
+    }
+  },
 }
 
 userForm.init();
+var audioRec = new AUAudioRecorder();
+audioRec.requestPermission();
+
+const interview = {
+  init: function(){
+    this.startInterview();
+  },
+  questionNr: 0,
+  startInterview: function(){
+    let activeArticle = document.querySelectorAll('article');
+    for(let i = 0; i < activeArticle.length; i++){
+      activeArticle[i].classList.remove('active');
+      if(i === this.questionNr){
+        activeArticle[i].classList.add('active');
+      }
+    }
+    audioRec.startRecording( (err) => { console.log(err); } );
+    let button = document.querySelectorAll('article')[this.questionNr];
+    button = button.querySelector('button');
+    button.addEventListener('click', function(e){
+      e.preventDefault();
+      audioRec.stopRecording( (err) => { console.log(err); } );
+    })
+    this.questionNr++;
+
+  }
+}

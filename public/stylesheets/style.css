@@ -1,5 +1,6 @@
 body {
-  margin: 0; }
+  margin: 0;
+  overflow-x: hidden; }
 
 section {
   width: 100vw;
@@ -8,11 +9,29 @@ section {
     height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center; }
+    align-items: center;
+    transition: .6s ease-in-out; }
     section.first-state form {
       max-width: 600px;
       width: 100%;
       display: flex;
       flex-direction: column; }
+    section.first-state.inactive {
+      transform: translateX(-100vw); }
+  section.second-state {
+    transform: translateX(100vw);
+    transition: .6s ease-in-out;
+    position: absolute;
+    top: 0;
+    left: 0; }
+    section.second-state.active {
+      transform: translateX(0); }
+    section.second-state article {
+      width: 100%;
+      height: 100%;
+      transform: translateX(100vw);
+      transition: .6s ease-in-out; }
+      section.second-state article.active {
+        transform: translateX(0); }
 
 /*# sourceMappingURL=style.css.map */
