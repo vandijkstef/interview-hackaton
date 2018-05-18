@@ -81,17 +81,31 @@ const interview = {
     const fd = new FormData();
         fd.append('fname', 'test.txt');
         fd.append('data', data);
-    (async () => {
-      const rawResponse = await fetch('/', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': false
-        },
-        body: fd
-      });
-      const content = await rawResponse.json();
-      console.log(content);
-    })();
+        fd.append('type', 'audio');
+
+    var reader = new FileReader();
+    reader.addEventListener("loadend", function() {
+      var base64FileData = reader.result.toString();
+      let obj = {
+        userId: userData._id,
+        audioBlob: base64FileData,
+        questionNr: (questionNr + 1)
+      };
+      console.log(userData._id);
+      (async () => {
+        const rawResponse = await fetch('/', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': false
+          },
+          body: obj
+        });
+        const content = await rawResponse.json();
+        console.log(content);
+      })();
+    });
+    reader.readAsDataURL(data);
+
   }
 }
