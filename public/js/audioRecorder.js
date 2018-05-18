@@ -51,7 +51,6 @@ class AUAudioRecorder {
 
 					instance.audio = new Audio(audioURL);
 					instance.theblob = blob;
-          console.log(instance.audio);
 				} // End of ondataavailable action.
 
 			} // End of onSuccess
