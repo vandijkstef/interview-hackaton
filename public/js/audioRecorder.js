@@ -51,7 +51,6 @@ class AUAudioRecorder {
 
 					instance.audio = new Audio(audioURL);
 					instance.theblob = blob;
-          console.log(instance);
 				} // End of ondataavailable action.
 
 			} // End of onSuccess
@@ -87,7 +86,6 @@ class AUAudioRecorder {
 
 	/* Stops the recording. */
 	stopRecording(callback) {
-    console.log('stopped');
 		if(this.mediaRecorder !== null) {
 			// Only stop recording if the state is recording.
 			if(this.mediaRecorder.state === 'recording') {

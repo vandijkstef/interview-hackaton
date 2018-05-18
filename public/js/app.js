@@ -78,20 +78,15 @@ const interview = {
 
   },
   sendData: function(data){
-    const fd = new FormData();
-        fd.append('fname', 'test.txt');
-        fd.append('data', data);
-        fd.append('type', 'audio');
-
     var reader = new FileReader();
     reader.addEventListener("loadend", function() {
       var base64FileData = reader.result.toString();
       let obj = {
         userId: userData._id,
         audioBlob: base64FileData,
-        questionNr: (questionNr + 1)
+        questionNr: (interview.questionNr + 1),
+        type: 'audio'
       };
-      console.log(userData._id);
       (async () => {
         const rawResponse = await fetch('/', {
           method: 'POST',
@@ -99,7 +94,7 @@ const interview = {
             'Accept': 'application/json',
             'Content-Type': false
           },
-          body: obj
+          body: JSON.stringify(obj)
         });
         const content = await rawResponse.json();
         console.log(content);
