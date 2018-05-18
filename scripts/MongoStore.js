@@ -1,6 +1,6 @@
 const mongo = require('mongodb');
 const mongoClient = mongo.MongoClient;
-const mongUrl = 'mongodb://localhost:27017/';
+const mongUrl = 'mongodb://intervuser:interpass@ds227740.mlab.com:27740/interviewathon';
 
 // Mongo base class to actually interact with the DB
 class MongoStore {
