@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Interview Hackaton</title>
+		
+		<link rel="stylesheet" href="/stylesheets/style.css">
+		<script type="text/javascript" src='/js/recorder.js'></script>
+	</head>
+	<body>
+		<button>Record and save</button>
+    <!-- <section class="first-state">
+      <form action="/" method="post">
+  			<input type="hidden" name="type" value="user">
+        <fieldset>
+          <label>
+            <p>
+              Enter your name
+            </p>
+    			  <input type="text" name="name">
+          </label>
+        </fieldset>
+        <fieldset>
+          <label>
+            <p>
+              Enter your age
+            </p>
+            <input type="number" name="age">
+          </label>
+        </fieldset>
+        <fieldset>
+    			<input type="radio" name="gender" value="male" id="male"><label for="male">Male</label>
+    			<input type="radio" name="gender" value="female" id="female"><label for="female">Female</label>
+    			<input type="radio" name="gender" checked value="unknown" id="unknown"><label for="unknown">Unknown</label>
+        </fieldset>
+  			<input type="submit">
+  		</form>
+    </section>
+    <section class="second-state">
+      <% for(let i = 0; i < data.length; i++){ %>
+        <article>
+          <%= data[i].question %>
+          <button class="next">Next question</button>
+        </article>
+      <% } %>
+    </section>
+    <audio src=""></audio>
+    <script type="text/javascript" src='/js/app.js'></script> -->
+	</body>
+	<script>
+		window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
+		let audioContext = new AudioContext();
+		let audioInput = null,
+			realAudioInput = null,
+			inputPoint = null,
+			audioRecorder = null;
+		let rafID = null;
+		let analyserContext = null;
+		let canvasWidth, canvasHeight;
+		let recIndex = 0;
+
+		function initAudio() {
+			if (!navigator.getUserMedia)
+				navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+			if (!navigator.cancelAnimationFrame)
+				navigator.cancelAnimationFrame = navigator.webkitCancelAnimationFrame || navigator.mozCancelAnimationFrame;
+			if (!navigator.requestAnimationFrame)
+				navigator.requestAnimationFrame = navigator.webkitRequestAnimationFrame || navigator.mozRequestAnimationFrame;
+		
+			const button = document.querySelector('button');
+			button.addEventListener('click', SendAudio);
+
+			navigator.getUserMedia({
+				"audio": {
+					"mandatory": {
+						"googEchoCancellation": "false",
+						"googAutoGainControl": "false",
+						"googNoiseSuppression": "false",
+						"googHighpassFilter": "false"
+					},
+					"optional": []
+				},
+			}, gotStream, function(e) {
+				alert('Error getting audio');
+				console.log(e);
+			});
+		}
+		initAudio();
+
+		function gotStream(stream) {
+			inputPoint = audioContext.createGain();
+
+			// Create an AudioNode from the stream.
+			realAudioInput = audioContext.createMediaStreamSource(stream);
+			audioInput = realAudioInput;
+			audioInput.connect(inputPoint);
+
+		//    audioInput = convertToMono( input );
+
+			analyserNode = audioContext.createAnalyser();
+			analyserNode.fftSize = 2048;
+			inputPoint.connect( analyserNode );
+
+			audioRecorder = new Recorder( inputPoint );
+
+			zeroGain = audioContext.createGain();
+			zeroGain.gain.value = 0.0;
+			inputPoint.connect( zeroGain );
+			zeroGain.connect( audioContext.destination );
+
+			audioRecorder.clear();
+        	// audioRecorder.record();
+		}
+
+		function SendAudio() {
+			console.log('Sending audio...');
+			audioRecorder.exportWAV((blob) => {
+				console.log(blob);
+				const theBlob = Object.assign({}, blob);
+
+				const formData = new FormData();
+				formData.append('audio', blob, 'audio.wav');
+
+				fetch('/', {
+					method: 'POST',
+					body: formData
+				});
+
+				audioRecorder.clear();
+        		audioRecorder.record();
+			});
+		}
+
+	</script>
+</html>
